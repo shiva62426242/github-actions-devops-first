@@ -1,4 +1,4 @@
-name: First GitHub Actions Workflow
+name: GitHub Actions Branch Test
 
 on:
   push:
