@@ -24,3 +24,8 @@ jobs:
 
       - name: Show Node.js version
         run: node --version
+
+      - name: Display trigger information
+        run: |
+          echo "Event: ${{ github.event_name }}"
+          echo "Branch: ${{ github.ref }}"
