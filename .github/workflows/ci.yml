@@ -1,4 +1,4 @@
-name: GitHub Actions Branch Test
+name: GitHub Actions Runner Test
 
 on:
   push:
@@ -25,7 +25,16 @@ jobs:
       - name: Show Node.js version
         run: node --version
 
-      - name: Display trigger information
+      - name: Show runner information
         run: |
-          echo "Event: ${{ github.event_name }}"
-          echo "Branch: ${{ github.ref }}"
+          echo "Operating System:"
+          uname -a
+
+          echo "Hostname:"
+          hostname
+
+          echo "User:"
+          whoami
+
+          echo "Working Directory:"
+          pwd
