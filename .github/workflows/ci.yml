@@ -1,59 +1,21 @@
-name: GitHub Actions Runner Test
+name: GitHub Token Test
 
 on:
-  push:
-    branches:
-      - main
-
-  pull_request:
-    branches:
-      - main
-
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   test:
     runs-on: self-hosted
-    env:
-      APP_NAME: github-actions-demo
-      ENVIRONMENT: dev
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Show files
-        run: ls -la
-
-      - name: Show Node.js version
-        run: node --version
-
-      - name: Show runner information
+      - name: Show GitHub information
         run: |
-          echo "Operating System:"
-          uname -a
-
-          echo "Hostname:"
-          hostname
-
-          echo "User:"
-          whoami
-
-          echo "Working Directory:"
-          pwd
-
-      - name: Show environment variables
-        run: |
-          echo "Application: $APP_NAME"
-          echo "Environment: $ENVIRONMENT"
-
-      - name: Test GitHub Secret
-        env:
-          DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
-        run: |
-          if [ -n "$DEMO_SECRET" ]; then
-            echo "Secret exists"
-          else
-            echo "Secret is missing"
-            exit 1
-          fi
+          echo "Repository: ${{ github.repository }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Workflow: ${{ github.workflow }}"
