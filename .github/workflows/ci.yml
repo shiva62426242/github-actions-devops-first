@@ -13,7 +13,10 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    env:
+      APP_NAME: github-actions-demo
+      ENVIRONMENT: dev
 
     steps:
       - name: Checkout code
@@ -38,3 +41,8 @@ jobs:
 
           echo "Working Directory:"
           pwd
+
+      - name: Show environment variables
+        run: |
+          echo "Application: $APP_NAME"
+          echo "Environment: $ENVIRONMENT"
