@@ -46,3 +46,14 @@ jobs:
         run: |
           echo "Application: $APP_NAME"
           echo "Environment: $ENVIRONMENT"
+
+      - name: Test GitHub Secret
+        env:
+          DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
+        run: |
+          if [ -n "$DEMO_SECRET" ]; then
+            echo "Secret exists"
+          else
+            echo "Secret is missing"
+            exit 1
+          fi
