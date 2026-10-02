@@ -1,0 +1,22 @@
+name: Always Condition Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Build
+        run: |
+          echo "Building application..."
+          echo "Build failed!"
+          exit 1
+
+      - name: Normal step
+        run: echo "This will not run"
+
+      - name: Cleanup
+        if: always()
+        run: echo "Cleanup is running even after failure"
