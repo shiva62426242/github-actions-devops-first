@@ -1,0 +1,26 @@
+name: Job Dependency Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Build
+        run: |
+          echo "Building application..."
+          sleep 5
+          echo "Build completed"
+
+  test:
+    needs: build
+    runs-on: self-hosted
+
+    steps:
+      - name: Test
+        run: |
+          echo "Testing application..."
+          sleep 5
+          echo "Test completed"
