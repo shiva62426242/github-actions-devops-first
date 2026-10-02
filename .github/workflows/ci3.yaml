@@ -1,0 +1,25 @@
+name: Job Failure Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Build
+        run: |
+          echo "Building application..."
+          echo "Build failed!"
+          exit 1
+
+  test:
+    needs: build
+    runs-on: self-hosted
+
+    steps:
+      - name: Test
+        run: |
+          echo "Testing application..."
+          echo "Test completed"
