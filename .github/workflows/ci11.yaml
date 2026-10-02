@@ -1,0 +1,23 @@
+name: Workflow Choice Input
+
+"on":
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Select deployment environment"
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - production
+        default: dev
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Show selected environment
+        run: |
+          echo "Selected environment: ${{ inputs.environment }}"
