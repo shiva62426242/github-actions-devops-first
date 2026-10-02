@@ -1,0 +1,22 @@
+name: Conditions Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Build
+        run: |
+          echo "Building application..."
+          exit 1
+
+      - name: Success message
+        if: success()
+        run: echo "Build was successful"
+
+      - name: Failure message
+        if: failure()
+        run: echo "Build failed - running failure handling"
