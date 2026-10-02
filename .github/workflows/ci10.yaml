@@ -1,0 +1,24 @@
+name: Workflow Input Test
+
+"on":
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Select environment"
+        required: true
+        default: "dev"
+
+      version:
+        description: "Enter application version"
+        required: true
+        default: "1.0"
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Show inputs
+        run: |
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Version: ${{ inputs.version }}"
