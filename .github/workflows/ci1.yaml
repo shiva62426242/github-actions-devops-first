@@ -1,0 +1,31 @@
+name: Artifact Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create build file
+        run: |
+          mkdir build
+          echo "This file was created by GitHub Actions" > build/app.txt
+          echo "Build completed successfully" >> build/app.txt
+
+      - name: Show build file
+        run: |
+          cat build/app.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-build-artifact
+          path: build/
