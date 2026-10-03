@@ -2,13 +2,18 @@ name: Reusable CI
 
 on:
   workflow_call:
+    inputs:
+      environment:
+        description: "Deployment environment"
+        required: true
+        type: string
 
 jobs:
   test:
     runs-on: self-hosted
 
     steps:
-      - name: Run common test
+      - name: Show environment
         run: |
-          echo "Running reusable CI workflow"
+          echo "Running CI for environment: ${{ inputs.environment }}"
           echo "Tests completed"
