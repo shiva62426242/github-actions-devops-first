@@ -1,0 +1,17 @@
+name: Environment Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    environment: dev
+
+    steps:
+      - name: Show environment
+        run: |
+          echo "Deploying to environment: dev"
+          echo "Repository: ${{ github.repository }}"
+          echo "Actor: ${{ github.actor }}"
