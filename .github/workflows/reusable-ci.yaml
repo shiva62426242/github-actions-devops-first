@@ -1,0 +1,14 @@
+name: Reusable CI
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: self-hosted
+
+    steps:
+      - name: Run common test
+        run: |
+          echo "Running reusable CI workflow"
+          echo "Tests completed"
