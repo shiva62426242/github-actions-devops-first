@@ -1,0 +1,25 @@
+name: Continue on Error Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: self-hosted
+
+    steps:
+      - name: Build
+        run: |
+          echo "Build completed successfully"
+
+      - name: Optional Security Scan
+        continue-on-error: true
+        run: |
+          echo "Running security scan..."
+          echo "Security scan found an issue"
+          exit 1
+
+      - name: Deploy
+        run: |
+          echo "Deploying application..."
+          echo "Deployment completed"
