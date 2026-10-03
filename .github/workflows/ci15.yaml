@@ -1,0 +1,35 @@
+name: Multiple Job Outputs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    outputs:
+      app-version: ${{ steps.info.outputs.app-version }}
+      image-name: ${{ steps.info.outputs.image-name }}
+
+    steps:
+      - name: Generate build information
+        id: info
+        run: |
+          VERSION="1.0.25"
+          IMAGE="myapp"
+
+          echo "Application version: $VERSION"
+          echo "Image name: $IMAGE"
+
+          echo "app-version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "image-name=$IMAGE" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+
+    steps:
+      - name: Show build information
+        run: |
+          echo "Application version: ${{ needs.build.outputs.app-version }}"
+          echo "Docker image name: ${{ needs.build.outputs.image-name }}"
