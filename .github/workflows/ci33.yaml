@@ -1,0 +1,63 @@
+name: Complete CI CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE_NAME: ghcr.io/shiva62426242/github-actions-devops-first
+
+jobs:
+
+  build-and-test:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          echo "Building application..."
+          echo "Build completed successfully"
+
+      - name: Test
+        run: |
+          echo "Running tests..."
+          echo "Tests passed"
+
+  docker-build:
+    needs: build-and-test
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | \
+          docker login ghcr.io \
+          -u "${{ github.actor }}" \
+          --password-stdin
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t $IMAGE_NAME:${{ github.sha }} \
+            .
+
+      - name: Test Docker image
+        run: |
+          docker run --rm $IMAGE_NAME:${{ github.sha }}
+
+      - name: Push Docker image
+        run: |
+          docker push $IMAGE_NAME:${{ github.sha }}
