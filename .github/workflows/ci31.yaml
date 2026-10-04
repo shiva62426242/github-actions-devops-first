@@ -1,0 +1,36 @@
+name: Docker Commit Tag Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  docker:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show commit SHA
+        run: |
+          echo "Commit SHA:"
+          echo "${{ github.sha }}"
+
+      - name: Login to GHCR
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t ghcr.io/shiva62426242/github-actions-devops-first:${{ github.sha }} \
+            .
+
+      - name: Push Docker image
+        run: |
+          docker push \
+            ghcr.io/shiva62426242/github-actions-devops-first:${{ github.sha }}
