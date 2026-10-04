@@ -1,0 +1,24 @@
+name: Docker Tagging Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  docker:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t github-actions-demo:latest .
+
+      - name: Create version tag
+        run: |
+          docker tag github-actions-demo:latest github-actions-demo:v1.0.0
+
+      - name: Show Docker images
+        run: |
+          docker images github-actions-demo
